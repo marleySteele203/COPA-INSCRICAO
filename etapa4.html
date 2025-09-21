@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Etapa 4 - País e Pagamento</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h2>País e Pagamento</h2>
+
+    <div class="progress-bar">
+        <div class="progress" style="width: 75%;"></div>
+    </div>
+
+    <input type="text" id="country" placeholder="País de residência" required>
+
+    <div class="note">
+        Métodos de Pagamento:<br>
+        <strong>M-PESA</strong> - 84 *** **** (NOME DA CONTA)<br>
+        <strong>MKESH</strong> - 83 *** **** (NOME DA CONTA)
+    </div>
+
+    <label for="paymentMessage">Mensagem de Confirmação do Pagamento</label>
+    <textarea id="paymentMessage" placeholder="Cole aqui a mensagem de confirmação" required></textarea>
+
+    <button onclick="nextStep()">Continuar</button>
+</div>
+
+<script src="script.js"></script>
+<script>
+function nextStep() {
+    const country = document.getElementById('country').value.trim();
+    const paymentMessage = document.getElementById('paymentMessage').value.trim();
+
+    if(!country || !paymentMessage){
+        alert('Preencha todos os campos');
+        return;
+    }
+
+    saveData('country', country);
+    saveData('paymentMessage', paymentMessage);
+
+    window.location.href = 'resumo.html';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Etapa 3 - Jogadores</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h2>Nomes dos Jogadores</h2>
+
+    <div class="progress-bar">
+        <div class="progress" style="width: 50%;"></div>
+    </div>
+
+    <div id="playerFields"></div>
+    <div class="note">* Pelo menos 3 jogadores devem incluir a tag da squad no nick</div>
+
+    <button onclick="nextStep()">Continuar</button>
+    <button onclick="history.back()">Voltar</button>
+</div>
+
+<script src="script.js"></script>
+<script>
+const mode = loadData('mode');
+const squadTag = loadData('squadTag');
+const playerDiv = document.getElementById('playerFields');
+
+// Define total de jogadores incluindo reservas
+let totalPlayers = mode === 'Solo' ? 3 : mode === 'Duo' ? 4 : 6;
+
+for(let i=1; i<=totalPlayers; i++){
+    playerDiv.innerHTML += `<input type="text" id="nick${i}" placeholder="Nick Jogador ${i}" required>`;
+}
+
+function nextStep(){
+    let players = [];
+    let tagCount = 0;
+
+    for(let i=1;i<=totalPlayers;i++){
+        const nick = document.getElementById('nick'+i).value.trim();
+        if(nick === '') { alert('Preencha todos os campos'); return; }
+        if(nick.includes(squadTag)) tagCount++;
+        players.push(nick);
+    }
+
+    if(tagCount < 3){
+        alert(`Pelo menos 3 jogadores devem incluir a tag "${squadTag}" no nick.`);
+        return;
+    }
+
+    saveData('players', players);
+    window.location.href = 'etapa4.html'; // vai para País + Pagamento
+}
+</script>
+</body>
+</html>
